@@ -13,9 +13,12 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useState, useEffect } from "react";
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -30,10 +33,12 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import usersTableData from "layouts/tables/data/usersTableData";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns: uColumns, rows: uRows, loading, error } = usersTableData();
 
   return (
     <DashboardLayout>
@@ -91,6 +96,47 @@ function Tables() {
                   showTotalEntries={false}
                   noEndBorder
                 />
+              </MDBox>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Admins Table
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                {loading ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <CircularProgress />
+                  </MDBox>
+                ) : error ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <MDTypography variant="button" color="error">
+                      {error}
+                    </MDTypography>
+                  </MDBox>
+                ) : (
+                  <MDBox p={2}>
+                    <DataTable
+                      table={{ columns: uColumns, rows: uRows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  </MDBox>
+                )}
               </MDBox>
             </Card>
           </Grid>
