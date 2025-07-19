@@ -34,11 +34,13 @@ import DataTable from "examples/Tables/DataTable";
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import usersTableData from "layouts/tables/data/usersTableData";
+import heroesTableData from "layouts/tables/data/heroesTableData";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
   const { columns: uColumns, rows: uRows, loading, error } = usersTableData();
+  const { columns: hColumns, rows: hRows } = heroesTableData();
 
   return (
     <DashboardLayout>
@@ -130,6 +132,47 @@ function Tables() {
                   <MDBox p={2}>
                     <DataTable
                       table={{ columns: uColumns, rows: uRows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  </MDBox>
+                )}
+              </MDBox>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Heroes Table
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                {loading ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <CircularProgress />
+                  </MDBox>
+                ) : error ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <MDTypography variant="button" color="error">
+                      {error}
+                    </MDTypography>
+                  </MDBox>
+                ) : (
+                  <MDBox p={2}>
+                    <DataTable
+                      table={{ columns: hColumns, rows: hRows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
