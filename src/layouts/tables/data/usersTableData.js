@@ -6,7 +6,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 
-export default function data() {
+export default function UsersTableData() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
