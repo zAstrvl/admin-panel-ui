@@ -31,16 +31,14 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
-import usersTableData from "layouts/tables/data/usersTableData";
-import heroesTableData from "layouts/tables/data/heroesTableData";
+import UsersTableData from "layouts/tables/data/usersTableData";
+import HeroesTableData from "layouts/tables/data/heroesTableData";
+import TestimonialsTableData from "layouts/tables/data/testimonialsTableData";
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
-  const { columns: uColumns, rows: uRows, loading, error } = usersTableData();
-  const { columns: hColumns, rows: hRows } = heroesTableData();
+  const { columns: uColumns, rows: uRows, loading, error } = UsersTableData();
+  const { columns: hColumns, rows: hRows } = HeroesTableData();
+  const { columns: tColumns, rows: tRows } = TestimonialsTableData();
 
   return (
     <DashboardLayout>
@@ -60,61 +58,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Authors Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Projects Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Admins Table
+                  Users Table
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -173,6 +117,47 @@ function Tables() {
                   <MDBox p={2}>
                     <DataTable
                       table={{ columns: hColumns, rows: hRows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  </MDBox>
+                )}
+              </MDBox>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Testimonials Table
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                {loading ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <CircularProgress />
+                  </MDBox>
+                ) : error ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <MDTypography variant="button" color="error">
+                      {error}
+                    </MDTypography>
+                  </MDBox>
+                ) : (
+                  <MDBox p={2}>
+                    <DataTable
+                      table={{ columns: tColumns, rows: tRows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
