@@ -30,7 +30,7 @@ export default function HeroesTableData() {
   );
 
   Hero.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     desc: PropTypes.string,
     image: PropTypes.string,
   };

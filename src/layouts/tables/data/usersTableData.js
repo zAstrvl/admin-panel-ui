@@ -1,3 +1,4 @@
+import AddUserModal from "components/AddUserModal";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import PropTypes from "prop-types";
@@ -6,14 +7,15 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 import MDButton from "components/MDButton";
-import EditUserModal from "components/EditUserModal"; // Düzeltildi
+import EditUserModal from "components/EditUserModal";
 
 export default function data() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null); // Tüm user data'sını saklayalım
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const User = ({ name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -66,6 +68,21 @@ export default function data() {
     fetchUsers();
     setEditModalOpen(false);
     setSelectedUser(null);
+  };
+
+  const handleUserAdded = () => {
+    console.log("User added, refreshing table");
+    fetchUsers();
+    setAddModalOpen(false);
+  };
+
+  const handleAddClick = () => {
+    console.log("Add User button clicked");
+    setAddModalOpen(true);
+  };
+
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
   };
 
   const fetchUsers = async () => {
@@ -124,11 +141,17 @@ export default function data() {
     />
   );
 
+  const addModal = (
+    <AddUserModal open={addModalOpen} onClose={handleAddModalClose} onUserAdded={handleUserAdded} />
+  );
+
   return {
     columns,
     rows,
     loading,
     error,
     editModal,
+    addModal,
+    handleAddClick,
   };
 }
