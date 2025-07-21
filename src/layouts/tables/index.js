@@ -40,7 +40,7 @@ function Tables() {
     rows: uRows,
     loading: usersLoading,
     error: usersError,
-    editModal,
+    editModal: usersEditModal,
   } = UsersTableData();
 
   const {
@@ -48,6 +48,7 @@ function Tables() {
     rows: hRows,
     loading: heroesLoading,
     error: heroesError,
+    editModal: heroEditModal,
   } = HeroesTableData();
 
   const {
@@ -62,6 +63,7 @@ function Tables() {
     rows: fRows,
     loading: featuresLoading,
     error: featuresError,
+    editModal: featuresEditModal,
   } = FeaturesTableData();
 
   return (
@@ -228,7 +230,9 @@ function Tables() {
         </Grid>
       </MDBox>
       <Footer />
-      {editModal}
+      {usersEditModal}
+      {featuresEditModal}
+      {heroEditModal}
     </DashboardLayout>
   );
 }

@@ -15,30 +15,30 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
-function EditUserModal({ open, onClose, userData, onUserUpdated }) {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    userType: "",
+function EditFeatureModal({ open, onClose, featureData, onFeatureUpdated }) {
+  const [feature, setFeature] = useState({
+    title: "",
+    description: "",
+    imageUrl: "",
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // Modal açıldığında user data'sını form'a yükle
+  // Modal açıldığında feature data'sını form'a yükle
   useEffect(() => {
-    if (open && userData) {
-      console.log("Loading user data into form:", userData);
-      setUser({
-        name: userData.name || "",
-        email: userData.email || "",
-        userType: userData.userType || "",
+    if (open && featureData) {
+      console.log("Loading feature data into form:", featureData);
+      setFeature({
+        title: featureData.title || "",
+        description: featureData.description || "",
+        imageUrl: featureData.imageUrl || "",
       });
       setError("");
     }
-  }, [open, userData]);
+  }, [open, featureData]);
 
   const handleInputChange = (field, value) => {
-    setUser((prev) => ({
+    setFeature((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -47,8 +47,8 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user.name || !user.email) {
-      setError("Name and email are required");
+    if (!feature.title || !feature.description) {
+      setError("Title and description are required");
       return;
     }
 
@@ -56,40 +56,37 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
       setSaving(true);
       setError("");
 
-      // API'nin beklediği tüm fieldları gönder
       const updateData = {
-        id: userData.id, // ID'yi de gönder
-        name: user.name.trim(),
-        email: user.email.trim(),
-        userType: user.userType || "User", // Default value
-        passwordHash: userData.passwordHash, // Mevcut password hash'i koru
+        id: featureData.id,
+        title: feature.title.trim(),
+        description: feature.description.trim(),
+        imageUrl: feature.imageUrl.trim(),
       };
 
-      console.log("Updating user ID:", userData.id, "with data:", updateData);
+      console.log("Updating feature ID:", featureData.id, "with data:", updateData);
 
-      // PUT isteği gönder
       const response = await Axios.put(
-        `https://localhost:7294/api/users/${userData.id}`,
+        `https://localhost:7294/api/features/${featureData.id}`,
         updateData
       );
-      console.log("User updated successfully:", response.data);
+      console.log("Feature updated successfully:", response.data);
 
-      onUserUpdated(); // Parent component'i güncelle ve modal'ı kapat
+      onFeatureUpdated(); // Parent component'i güncelle
+      onClose(); // Modal'ı kapat
     } catch (err) {
-      console.error("Error updating user:", err);
-      console.error("Error response:", err.response?.data); // API'den gelen detaylı hata mesajı
+      console.error("Error updating feature:", err);
+      console.error("Error response:", err.response?.data);
 
       if (err.response?.status === 404) {
-        setError("User not found. The user may have been deleted.");
+        setError("Feature not found. The feature may have been deleted.");
       } else if (err.response?.status === 400) {
-        // 400 hatası için daha detaylı mesaj
         const errorMessage =
           err.response?.data?.message ||
           err.response?.data?.title ||
           "Invalid data. Please check all fields.";
         setError(errorMessage);
       } else {
-        setError(err.response?.data?.message || "Failed to update user");
+        setError(err.response?.data?.message || "Failed to update feature");
       }
     } finally {
       setSaving(false);
@@ -97,14 +94,19 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
   };
 
   const handleClose = () => {
-    setUser({ name: "", email: "", userType: "" });
+    setFeature({ title: "", description: "", imageUrl: "" });
     setError("");
     onClose();
   };
 
+  // Modal'ı sadece featureData varsa göster
+  if (!featureData) {
+    return null;
+  }
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Edit User</DialogTitle>
+      <DialogTitle>Edit Feature</DialogTitle>
 
       <DialogContent>
         <MDBox component="form" role="form" mt={2}>
@@ -121,22 +123,9 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Name"
-                  value={user.name}
-                  onChange={(e) => handleInputChange("name", e.target.value)}
-                  fullWidth
-                  required
-                />
-              </MDBox>
-            </Grid>
-
-            <Grid item xs={12}>
-              <MDBox mb={2}>
-                <MDInput
-                  type="email"
-                  label="Email"
-                  value={user.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  label="Title"
+                  value={feature.title}
+                  onChange={(e) => handleInputChange("title", e.target.value)}
                   fullWidth
                   required
                 />
@@ -147,11 +136,26 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="User Type"
-                  value={user.userType}
-                  onChange={(e) => handleInputChange("userType", e.target.value)}
+                  label="Description"
+                  value={feature.description}
+                  onChange={(e) => handleInputChange("description", e.target.value)}
                   fullWidth
-                  placeholder="Admin, Editor, User..."
+                  multiline
+                  rows={3}
+                  required
+                />
+              </MDBox>
+            </Grid>
+
+            <Grid item xs={12}>
+              <MDBox mb={2}>
+                <MDInput
+                  type="url"
+                  label="Image URL"
+                  value={feature.imageUrl}
+                  onChange={(e) => handleInputChange("imageUrl", e.target.value)}
+                  fullWidth
+                  placeholder="https://example.com/image.jpg"
                 />
               </MDBox>
             </Grid>
@@ -171,11 +175,11 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
   );
 }
 
-EditUserModal.propTypes = {
+EditFeatureModal.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  userData: PropTypes.object,
-  onUserUpdated: PropTypes.func.isRequired,
+  featureData: PropTypes.object, // isRequired kaldırıldı
+  onFeatureUpdated: PropTypes.func.isRequired,
 };
 
-export default EditUserModal;
+export default EditFeatureModal;

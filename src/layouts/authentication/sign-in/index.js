@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
+import "../../../utils/axiosConfig";
 import { useState } from "react";
 
 // react-router-dom components
@@ -78,7 +78,10 @@ function Basic() {
         email: formData.email,
         password: formData.password,
       });
+      const token = response.data.token; // veya response.data.accessToken
+      localStorage.setItem("authToken", token); // Token'ı kaydet
       console.log("Login successful:", response.data);
+      console.log("Token saved:", token);
       // Handle successful login (e.g., redirect or store token)
     } catch (error) {
       console.error("Login failed:", error);
