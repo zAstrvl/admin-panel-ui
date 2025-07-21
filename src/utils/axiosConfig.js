@@ -1,35 +1,33 @@
-import { error } from "ajv/dist/vocabularies/applicator/dependencies";
 import Axios from "axios";
 
-Axios.defaults.baseURL = "http://localhost:7294/api"; // API URL'sini ayarla
+// ✅ Proxy kullanıyorsanız base URL'i kaldırın
+Axios.defaults.baseURL = "/api"; // Sadece /api
 
+// Request interceptor
 Axios.interceptors.request.use(
   (config) => {
-    // İstek öncesi işlemler
-    const token = localStorage.getItem("authToken"); // Token'ı localStorage'dan al
+    const token = localStorage.getItem("authToken");
 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // Token'ı Authorization header'ına ekle
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
-    if (!config.headers["Content-Type"]) {
-      config.headers["Content-Type"] = "application/json";
-    }
+    config.headers["Content-Type"] = "application/json";
 
-    console.log("Axios request config:", config);
+    console.log("Request URL:", config.baseURL + config.url); // Debug için
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
+// Response interceptor - CORS hatalarını yakala
 Axios.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      console.error("Unauthorized request - redirecting to login");
-      localStorage.removeItem("authToken"); // Token'ı sil
+    if (error.code === "ERR_NETWORK") {
+      console.error("Network Error - Possible CORS issue");
+      console.error("Check if backend CORS is configured properly");
     }
     return Promise.reject(error);
   }

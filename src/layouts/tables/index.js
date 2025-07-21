@@ -21,6 +21,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -34,6 +35,10 @@ import HeroesTableData from "layouts/tables/data/heroesTableData";
 import TestimonialsTableData from "layouts/tables/data/testimonialsTableData";
 import FeaturesTableData from "layouts/tables/data/featuresTableData";
 
+import AddIcon from "@mui/icons-material/Add";
+import Axios from "axios";
+import { useState } from "react";
+
 function Tables() {
   const {
     columns: uColumns,
@@ -41,6 +46,8 @@ function Tables() {
     loading: usersLoading,
     error: usersError,
     editModal: usersEditModal,
+    addModal: usersAddModal,
+    handleAddClick: handleAddUser,
   } = UsersTableData();
 
   const {
@@ -49,6 +56,8 @@ function Tables() {
     loading: heroesLoading,
     error: heroesError,
     editModal: heroEditModal,
+    addModal: heroAddModal,
+    handleAddClick: handleAddHero,
   } = HeroesTableData();
 
   const {
@@ -57,6 +66,8 @@ function Tables() {
     loading: testimonialsLoading,
     error: testimonialsError,
     editModal: testimonialsEditModal,
+    addModal: testimonialsAddModal,
+    handleAddClick: handleAddTestimonial,
   } = TestimonialsTableData();
 
   const {
@@ -65,7 +76,16 @@ function Tables() {
     loading: featuresLoading,
     error: featuresError,
     editModal: featuresEditModal,
+    addModal: featuresAddModal,
+    handleAddClick: handleAddFeature,
   } = FeaturesTableData();
+
+  const [loading, setLoading] = useState({
+    addingUser: false,
+    addingHero: false,
+    addingTestimonial: false,
+    addingFeature: false,
+  });
 
   return (
     <DashboardLayout>
@@ -83,10 +103,22 @@ function Tables() {
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
               >
                 <MDTypography variant="h6" color="white">
                   Users Table
                 </MDTypography>
+                <MDButton
+                  variant="contained"
+                  color="white"
+                  size="small"
+                  onClick={handleAddUser}
+                  startIcon={<AddIcon />}
+                >
+                  Add User
+                </MDButton>
               </MDBox>
               <MDBox pt={3}>
                 {usersLoading ? (
@@ -108,6 +140,16 @@ function Tables() {
                     noEndBorder
                   />
                 )}
+                <MDBox p={3} display="flex" justifyContent="center">
+                  <MDButton
+                    variant="gradient"
+                    color="success"
+                    onClick={handleAddUser}
+                    startIcon={<AddIcon />}
+                  >
+                    Add New User
+                  </MDButton>
+                </MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -126,6 +168,15 @@ function Tables() {
                 <MDTypography variant="h6" color="white">
                   Heroes Table
                 </MDTypography>
+                <MDButton
+                  variant="contained"
+                  color="white"
+                  size="small"
+                  onClick={handleAddHero}
+                  startIcon={<AddIcon />}
+                >
+                  Add Hero
+                </MDButton>
               </MDBox>
               <MDBox pt={3}>
                 {heroesLoading ? (
@@ -147,6 +198,16 @@ function Tables() {
                     noEndBorder
                   />
                 )}
+                <MDBox p={3} display="flex" justifyContent="center">
+                  <MDButton
+                    variant="gradient"
+                    color="success"
+                    onClick={handleAddHero}
+                    startIcon={<AddIcon />}
+                  >
+                    Add New Hero
+                  </MDButton>
+                </MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -165,6 +226,15 @@ function Tables() {
                 <MDTypography variant="h6" color="white">
                   Testimonials Table
                 </MDTypography>
+                <MDButton
+                  variant="contained"
+                  color="white"
+                  size="small"
+                  onClick={handleAddTestimonial}
+                  startIcon={<AddIcon />}
+                >
+                  Add Testimonial
+                </MDButton>
               </MDBox>
               <MDBox pt={3}>
                 {testimonialsLoading ? (
@@ -186,6 +256,16 @@ function Tables() {
                     noEndBorder
                   />
                 )}
+                <MDBox p={3} display="flex" justifyContent="center">
+                  <MDButton
+                    variant="gradient"
+                    color="success"
+                    onClick={handleAddTestimonial}
+                    startIcon={<AddIcon />}
+                  >
+                    Add New Testimonial
+                  </MDButton>
+                </MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -204,6 +284,15 @@ function Tables() {
                 <MDTypography variant="h6" color="white">
                   Features Table
                 </MDTypography>
+                <MDButton
+                  variant="contained"
+                  color="white"
+                  size="small"
+                  onClick={handleAddFeature}
+                  startIcon={<AddIcon />}
+                >
+                  Add Feature
+                </MDButton>
               </MDBox>
               <MDBox pt={3}>
                 {featuresLoading ? (
@@ -225,6 +314,16 @@ function Tables() {
                     noEndBorder
                   />
                 )}
+                <MDBox p={3} display="flex" justifyContent="center">
+                  <MDButton
+                    variant="gradient"
+                    color="success"
+                    onClick={handleAddFeature}
+                    startIcon={<AddIcon />}
+                  >
+                    Add New Feature
+                  </MDButton>
+                </MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -232,6 +331,7 @@ function Tables() {
       </MDBox>
       <Footer />
       {usersEditModal}
+      {usersAddModal}
       {featuresEditModal}
       {heroEditModal}
       {testimonialsEditModal}
