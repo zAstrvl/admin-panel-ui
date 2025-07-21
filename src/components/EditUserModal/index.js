@@ -151,7 +151,7 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
                   value={user.userType}
                   onChange={(e) => handleInputChange("userType", e.target.value)}
                   fullWidth
-                  placeholder="Admin, Editor, User..."
+                  placeholder="Admin, Editor, Guest..."
                 />
               </MDBox>
             </Grid>
@@ -160,7 +160,7 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
       </DialogContent>
 
       <DialogActions>
-        <MDButton variant="text" color="secondary" onClick={handleClose}>
+        <MDButton variant="contained" color="secondary" onClick={handleClose}>
           Cancel
         </MDButton>
         <MDButton variant="gradient" color="info" onClick={handleSubmit} disabled={saving}>

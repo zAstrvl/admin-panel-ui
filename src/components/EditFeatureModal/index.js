@@ -164,7 +164,7 @@ function EditFeatureModal({ open, onClose, featureData, onFeatureUpdated }) {
       </DialogContent>
 
       <DialogActions>
-        <MDButton variant="text" color="secondary" onClick={handleClose}>
+        <MDButton variant="contained" color="secondary" onClick={handleClose}>
           Cancel
         </MDButton>
         <MDButton variant="gradient" color="info" onClick={handleSubmit} disabled={saving}>

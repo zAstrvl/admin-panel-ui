@@ -56,6 +56,7 @@ function Tables() {
     rows: tRows,
     loading: testimonialsLoading,
     error: testimonialsError,
+    editModal: testimonialsEditModal,
   } = TestimonialsTableData();
 
   const {
@@ -233,6 +234,7 @@ function Tables() {
       {usersEditModal}
       {featuresEditModal}
       {heroEditModal}
+      {testimonialsEditModal}
     </DashboardLayout>
   );
 }

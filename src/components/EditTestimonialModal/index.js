@@ -14,30 +14,31 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import { Edit } from "@mui/icons-material";
 
-function EditHeroModal({ open, onClose, heroData, onHeroUpdated }) {
-  const [hero, setHero] = useState({
-    title: "",
-    description: "",
+function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpdated }) {
+  const [testimonial, setTestimonial] = useState({
+    name: "",
+    content: "",
     imageUrl: "",
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (open && heroData) {
-      console.log("Loading hero data into form:", heroData);
-      setHero({
-        title: heroData.title || "",
-        description: heroData.description || "",
-        imageUrl: heroData.imageUrl || "",
+    if (open && testimonialData) {
+      console.log("Loading testimonial data into form:", testimonialData);
+      setTestimonial({
+        name: testimonialData.name || "",
+        content: testimonialData.content || "",
+        imageUrl: testimonialData.imageUrl || "",
       });
       setError("");
     }
-  }, [open, heroData]);
+  }, [open, testimonialData]);
 
   const handleInputChange = (field, value) => {
-    setHero((prev) => ({
+    setTestimonial((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -46,8 +47,8 @@ function EditHeroModal({ open, onClose, heroData, onHeroUpdated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!hero.title || !hero.description) {
-      setError("Title and description are required");
+    if (!testimonial.name || !testimonial.content) {
+      setError("Name and content are required");
       return;
     }
 
@@ -56,46 +57,47 @@ function EditHeroModal({ open, onClose, heroData, onHeroUpdated }) {
       setError("");
 
       const updateData = {
-        id: heroData.id,
-        title: hero.title,
-        description: hero.description,
-        imageUrl: hero.imageUrl,
+        id: testimonialData.id,
+        name: testimonial.name,
+        content: testimonial.content,
+        imageUrl: testimonial.imageUrl,
       };
 
       const response = await Axios.put(
-        `https://localhost:7294/api/hero/${heroData.id}`,
+        `https://localhost:7294/api/testimonials/${testimonialData.id}`,
         updateData
       );
-      console.log("Hero updated successfully:", response.data);
-
-      onHeroUpdated(response.data);
+      console.log("Testimonial updated successfully:", response.data);
+      onTestimonialUpdated(response.data);
       onClose();
     } catch (err) {
-      console.error("Error updating hero:", err);
-      setError("Failed to update hero. Please try again.");
+      console.error("Error updating testimonial:", err);
+      setError("Failed to update testimonial");
     } finally {
       setSaving(false);
     }
   };
 
   const handleClose = () => {
-    setHero({
-      title: "",
-      description: "",
+    setTestimonial({
+      name: "",
+      content: "",
       imageUrl: "",
     });
     console.log("Modal closing");
     onClose();
   };
 
-  if (!heroData) return null;
+  if (!testimonialData) {
+    return null;
+  }
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogTitle>Edit Hero</DialogTitle>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogTitle>Edit Testimonial</DialogTitle>
 
       <DialogContent>
-        <MDBox component="form" onSubmit={handleSubmit} p={3}>
+        <MDBox component="form" onClose={handleClose} p={3}>
           {error && (
             <MDBox mb={2} p={2} borderRadius="lg" sx={{ backgroundColor: "#ffebee" }}>
               <MDTypography variant="caption" color="error">
@@ -109,32 +111,34 @@ function EditHeroModal({ open, onClose, heroData, onHeroUpdated }) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Title"
-                  value={hero.title}
-                  onChange={(e) => handleInputChange("title", e.target.value)}
+                  label="Name"
+                  value={testimonial.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
                   fullWidth
                   required
                 />
               </MDBox>
             </Grid>
+
             <Grid item xs={12}>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Description"
-                  value={hero.description}
-                  onChange={(e) => handleInputChange("description", e.target.value)}
+                  label="Content"
+                  value={testimonial.content}
+                  onChange={(e) => handleInputChange("content", e.target.value)}
                   fullWidth
                   required
                 />
               </MDBox>
             </Grid>
+
             <Grid item xs={12}>
               <MDBox mb={2}>
                 <MDInput
                   type="text"
                   label="Image URL"
-                  value={hero.imageUrl}
+                  value={testimonial.imageUrl}
                   onChange={(e) => handleInputChange("imageUrl", e.target.value)}
                   fullWidth
                 />
@@ -156,10 +160,10 @@ function EditHeroModal({ open, onClose, heroData, onHeroUpdated }) {
   );
 }
 
-EditHeroModal.propTypes = {
+EditTestimonialModal.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  heroData: PropTypes.object,
-  onHeroUpdated: PropTypes.func.isRequired,
+  testimonialData: PropTypes.object,
+  onTestimonialUpdated: PropTypes.func.isRequired,
 };
-export default EditHeroModal;
+export default EditTestimonialModal;

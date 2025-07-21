@@ -31,8 +31,8 @@ export default function HeroesTableData() {
 
   Hero.propTypes = {
     title: PropTypes.string.isRequired,
-    desc: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    desc: PropTypes.string,
+    image: PropTypes.string,
   };
 
   const handleEditClick = (hero) => {
@@ -74,6 +74,7 @@ export default function HeroesTableData() {
     { Header: "description", accessor: "description", align: "center" },
     { Header: "action", accessor: "action", align: "center" },
   ];
+
   const rows = heroes.map((hero) => ({
     hero: <Hero title={hero.title} desc={hero.description} image={hero.imageUrl} />,
     title: (
@@ -103,5 +104,6 @@ export default function HeroesTableData() {
       onHeroUpdated={handleHeroUpdated}
     />
   );
+
   return { columns, rows, loading, error, editModal };
 }
