@@ -5,32 +5,36 @@ import PropTypes from "prop-types";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
+import MDButton from "components/MDButton";
+import EditUserModal from "components/EditUserModal"; // Düzeltildi
 
-export default function UsersTableData() {
+export default function data() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); // Tüm user data'sını saklayalım
 
   const User = ({ name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
-          {name}
+          {name || "No Name"}
         </MDTypography>
-        <MDTypography variant="caption">{email}</MDTypography>
+        <MDTypography variant="caption">{email || "No Email"}</MDTypography>
       </MDBox>
     </MDBox>
   );
 
   User.propTypes = {
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    email: PropTypes.string,
   };
 
   const Status = ({ status }) => (
     <MDBox ml={-1}>
       <MDBadge
-        badgeContent={status}
+        badgeContent={status || "inactive"}
         color={status === "active" ? "success" : "secondary"}
         variant="gradient"
         size="sm"
@@ -39,21 +43,48 @@ export default function UsersTableData() {
   );
 
   Status.propTypes = {
-    status: PropTypes.string.isRequired,
+    status: PropTypes.string,
+  };
+
+  // Edit button handler - Direkt user data'sını geçir
+  const handleEditClick = (user) => {
+    console.log("Edit clicked for user:", user);
+    setSelectedUser(user);
+    setEditModalOpen(true);
+  };
+
+  // Modal close handler
+  const handleModalClose = () => {
+    console.log("Modal closing");
+    setEditModalOpen(false);
+    setSelectedUser(null);
+  };
+
+  // User updated handler - refresh the table
+  const handleUserUpdated = () => {
+    console.log("User updated, refreshing table");
+    fetchUsers();
+    setEditModalOpen(false);
+    setSelectedUser(null);
+  };
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await Axios.get("https://localhost:7294/api/users");
+      console.log("Users API Response:", response.data);
+      setUsers(response.data || []);
+      setError("");
+    } catch (err) {
+      console.error("Users API Error:", err);
+      setError("Failed to fetch users");
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await Axios.get("https://localhost:7294/api/users");
-        setUsers(response.data);
-      } catch (err) {
-        setError("Failed to fetch users");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsers();
   }, []);
 
@@ -68,21 +99,36 @@ export default function UsersTableData() {
     user: <User name={user.name} email={user.email} />,
     userType: (
       <MDTypography variant="caption" color="text" fontWeight="medium">
-        {user.userType}
+        {user.userType || "No Type"}
       </MDTypography>
     ),
-    status: <Status status={user.status || "inactive"} />,
+    status: <Status status={user.status} />,
     action: (
-      <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+      <MDButton
+        variant="text"
+        color="info"
+        size="small"
+        onClick={() => handleEditClick(user)} // Tüm user object'ini geç
+      >
         Edit
-      </MDTypography>
+      </MDButton>
     ),
   }));
+
+  const editModal = (
+    <EditUserModal
+      open={editModalOpen}
+      onClose={handleModalClose}
+      userData={selectedUser} // userId yerine userData geç
+      onUserUpdated={handleUserUpdated}
+    />
+  );
 
   return {
     columns,
     rows,
     loading,
     error,
+    editModal,
   };
 }

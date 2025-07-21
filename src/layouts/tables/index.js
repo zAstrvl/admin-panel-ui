@@ -35,10 +35,34 @@ import TestimonialsTableData from "layouts/tables/data/testimonialsTableData";
 import FeaturesTableData from "layouts/tables/data/featuresTableData";
 
 function Tables() {
-  const { columns: uColumns, rows: uRows, loading, error } = UsersTableData();
-  const { columns: hColumns, rows: hRows } = HeroesTableData();
-  const { columns: tColumns, rows: tRows } = TestimonialsTableData();
-  const { columns: fColumns, rows: fRows } = FeaturesTableData();
+  const {
+    columns: uColumns,
+    rows: uRows,
+    loading: usersLoading,
+    error: usersError,
+    editModal,
+  } = UsersTableData();
+
+  const {
+    columns: hColumns,
+    rows: hRows,
+    loading: heroesLoading,
+    error: heroesError,
+  } = HeroesTableData();
+
+  const {
+    columns: tColumns,
+    rows: tRows,
+    loading: testimonialsLoading,
+    error: testimonialsError,
+  } = TestimonialsTableData();
+
+  const {
+    columns: fColumns,
+    rows: fRows,
+    loading: featuresLoading,
+    error: featuresError,
+  } = FeaturesTableData();
 
   return (
     <DashboardLayout>
@@ -62,26 +86,24 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {loading ? (
+                {usersLoading ? (
                   <MDBox display="flex" justifyContent="center" p={3}>
                     <CircularProgress />
                   </MDBox>
-                ) : error ? (
-                  <MDBox display="flex" justifyContent="center" p={3}>
-                    <MDTypography variant="button" color="error">
-                      {error}
+                ) : usersError ? (
+                  <MDBox p={3}>
+                    <MDTypography variant="body2" color="error">
+                      {usersError}
                     </MDTypography>
                   </MDBox>
                 ) : (
-                  <MDBox p={2}>
-                    <DataTable
-                      table={{ columns: uColumns, rows: uRows }}
-                      isSorted={false}
-                      entriesPerPage={false}
-                      showTotalEntries={false}
-                      noEndBorder
-                    />
-                  </MDBox>
+                  <DataTable
+                    table={{ columns: uColumns, rows: uRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
                 )}
               </MDBox>
             </Card>
@@ -103,26 +125,24 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {loading ? (
+                {heroesLoading ? (
                   <MDBox display="flex" justifyContent="center" p={3}>
                     <CircularProgress />
                   </MDBox>
-                ) : error ? (
-                  <MDBox display="flex" justifyContent="center" p={3}>
-                    <MDTypography variant="button" color="error">
-                      {error}
+                ) : heroesError ? (
+                  <MDBox p={3}>
+                    <MDTypography variant="body2" color="error">
+                      {heroesError}
                     </MDTypography>
                   </MDBox>
                 ) : (
-                  <MDBox p={2}>
-                    <DataTable
-                      table={{ columns: hColumns, rows: hRows }}
-                      isSorted={false}
-                      entriesPerPage={false}
-                      showTotalEntries={false}
-                      noEndBorder
-                    />
-                  </MDBox>
+                  <DataTable
+                    table={{ columns: hColumns, rows: hRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
                 )}
               </MDBox>
             </Card>
@@ -144,26 +164,24 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {loading ? (
+                {testimonialsLoading ? (
                   <MDBox display="flex" justifyContent="center" p={3}>
                     <CircularProgress />
                   </MDBox>
-                ) : error ? (
-                  <MDBox display="flex" justifyContent="center" p={3}>
-                    <MDTypography variant="button" color="error">
-                      {error}
+                ) : testimonialsError ? (
+                  <MDBox p={3}>
+                    <MDTypography variant="body2" color="error">
+                      {testimonialsError}
                     </MDTypography>
                   </MDBox>
                 ) : (
-                  <MDBox p={2}>
-                    <DataTable
-                      table={{ columns: tColumns, rows: tRows }}
-                      isSorted={false}
-                      entriesPerPage={false}
-                      showTotalEntries={false}
-                      noEndBorder
-                    />
-                  </MDBox>
+                  <DataTable
+                    table={{ columns: tColumns, rows: tRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
                 )}
               </MDBox>
             </Card>
@@ -185,26 +203,24 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {loading ? (
+                {featuresLoading ? (
                   <MDBox display="flex" justifyContent="center" p={3}>
                     <CircularProgress />
                   </MDBox>
-                ) : error ? (
-                  <MDBox display="flex" justifyContent="center" p={3}>
-                    <MDTypography variant="button" color="error">
-                      {error}
+                ) : featuresError ? (
+                  <MDBox p={3}>
+                    <MDTypography variant="body2" color="error">
+                      {featuresError}
                     </MDTypography>
                   </MDBox>
                 ) : (
-                  <MDBox p={2}>
-                    <DataTable
-                      table={{ columns: fColumns, rows: fRows }}
-                      isSorted={false}
-                      entriesPerPage={false}
-                      showTotalEntries={false}
-                      noEndBorder
-                    />
-                  </MDBox>
+                  <DataTable
+                    table={{ columns: fColumns, rows: fRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
                 )}
               </MDBox>
             </Card>
@@ -212,6 +228,7 @@ function Tables() {
         </Grid>
       </MDBox>
       <Footer />
+      {editModal}
     </DashboardLayout>
   );
 }
