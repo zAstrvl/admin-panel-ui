@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types"; // ✅ "func" import'unu kaldırdım
 import Axios from "axios";
 
@@ -8,6 +8,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Grid from "@mui/material/Grid";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -22,8 +26,15 @@ function AddUserModal({ open, onClose, onUserAdded }) {
     userType: "",
     password: "",
   });
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+
+  const userTypeOptions = [
+    { value: "Admin", label: "Admin" },
+    { value: "Editor", label: "Editor" },
+    { value: "Guest", label: "Guest" },
+  ];
 
   const handleInputChange = (field, value) => {
     setUser((prev) => ({
@@ -97,7 +108,6 @@ function AddUserModal({ open, onClose, onUserAdded }) {
   };
 
   return (
-    // ✅ return try-catch dışında
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>Add New User</DialogTitle>
 
@@ -153,14 +163,28 @@ function AddUserModal({ open, onClose, onUserAdded }) {
 
             <Grid item xs={12}>
               <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="User Type"
-                  value={user.userType}
-                  onChange={(e) => handleInputChange("userType", e.target.value)}
-                  fullWidth
-                  placeholder="Admin, Editor, User..."
-                />
+                <FormControl fullWidth required>
+                  <InputLabel id="user-type-label">User Type</InputLabel>
+                  <Select
+                    labelId="user-type-label"
+                    id="user-type-select"
+                    value={user.userType}
+                    label="User Type"
+                    onChange={(e) => handleInputChange("userType", e.target.value)}
+                    sx={{
+                      minHeight: "45px", // MDInput ile uyumlu yükseklik
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: "0.5rem", // Material Dashboard style
+                      },
+                    }}
+                  >
+                    {userTypeOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </MDBox>
             </Grid>
           </Grid>
