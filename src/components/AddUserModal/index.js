@@ -69,7 +69,6 @@ function AddUserModal({ open, onClose, onUserAdded }) {
 
       console.log("Creating user with data:", newUser);
 
-      // ✅ Proxy kullanıyorsanız sadece endpoint'i belirtin
       const response = await Axios.post("/users", newUser);
       console.log("User created:", response.data);
 
@@ -100,7 +99,6 @@ function AddUserModal({ open, onClose, onUserAdded }) {
     }
   };
 
-  // ✅ handleClose function'ı try-catch dışına taşındı
   const handleClose = () => {
     setUser({ name: "", email: "", userType: "", password: "" });
     setError("");
@@ -201,7 +199,7 @@ function AddUserModal({ open, onClose, onUserAdded }) {
       </DialogActions>
     </Dialog>
   );
-} // ✅ Kapatma parantezi düzeltildi
+}
 
 AddUserModal.propTypes = {
   open: PropTypes.bool.isRequired,
