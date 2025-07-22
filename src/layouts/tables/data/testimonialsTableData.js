@@ -7,6 +7,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
 import EditTestimonialModal from "components/EditTestimonialModal";
+import AddTestimonialModal from "components/AddTestimonialModal";
 
 export default function TestimonialsTableData() {
   const [testimonials, setTestimonials] = useState([]);
@@ -14,6 +15,7 @@ export default function TestimonialsTableData() {
   const [error, setError] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const Testimonial = ({ title, description, imageUrl }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -50,6 +52,14 @@ export default function TestimonialsTableData() {
     fetchTestimonials(); // Refresh the list after update
   };
 
+  const handleAddClick = () => {
+    console.log("Add Testimonial button clicked");
+    setAddModalOpen(true);
+  };
+
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
+  };
   const fetchTestimonials = async () => {
     try {
       setLoading(true);
@@ -111,5 +121,12 @@ export default function TestimonialsTableData() {
     />
   );
 
-  return { columns, rows, loading, error, editModal };
+  const addModal = (
+    <AddTestimonialModal
+      open={addModalOpen}
+      onClose={() => setAddModalOpen(false)}
+      onTestimonialAdded={fetchTestimonials} // Refresh the list after adding a new testimonial
+    />
+  );
+  return { columns, rows, loading, error, editModal, addModal, handleAddClick };
 }

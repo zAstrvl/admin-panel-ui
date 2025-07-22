@@ -7,6 +7,7 @@ import MDAvatar from "components/MDAvatar";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import EditFeatureModal from "components/EditFeatureModal";
+import AddFeatureModal from "components/AddFeatureModal";
 
 export default function data() {
   // Function adı düzeltildi
@@ -15,6 +16,7 @@ export default function data() {
   const [error, setError] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const Feature = ({ title, description, imageUrl }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -53,6 +55,13 @@ export default function data() {
     fetchFeatures(); // Refresh the list after update
   };
 
+  const handleAddClick = () => {
+    console.log("Add Feature button clicked");
+    setAddModalOpen(true);
+  };
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
+  };
   const fetchFeatures = async () => {
     try {
       setLoading(true);
@@ -116,5 +125,13 @@ export default function data() {
     />
   );
 
-  return { columns, rows, loading, error, editModal };
+  const addModal = (
+    <AddFeatureModal
+      open={addModalOpen}
+      onClose={handleAddModalClose}
+      onFeatureAdded={fetchFeatures}
+    />
+  );
+
+  return { columns, rows, loading, error, editModal, addModal, handleAddClick };
 }
