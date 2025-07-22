@@ -7,6 +7,7 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
 import EditHeroModal from "components/EditHeroModal";
+import AddHeroModal from "components/AddHeroModal";
 
 export default function HeroesTableData() {
   const [heroes, setHeroes] = useState([]);
@@ -14,6 +15,7 @@ export default function HeroesTableData() {
   const [error, setError] = useState("");
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedHero, setSelectedHero] = useState(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const Hero = ({ title, desc, image }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -50,6 +52,23 @@ export default function HeroesTableData() {
   const handleHeroUpdated = () => {
     console.log("Hero updated, refreshing table");
     fetchHeroes(); // Refresh the list after update
+    setEditModalOpen(false);
+    setSelectedHero(null);
+  };
+
+  const handleHeroAdded = () => {
+    console.log("Hero added, refreshing table");
+    fetchHeroes();
+    setAddModalOpen(false);
+  };
+
+  const handleAddClick = () => {
+    console.log("Add Hero button clicked");
+    setAddModalOpen(true);
+  };
+
+  const handleAddModalClose = () => {
+    setAddModalOpen(false);
   };
 
   const fetchHeroes = async () => {
@@ -64,6 +83,7 @@ export default function HeroesTableData() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchHeroes();
   }, []);
@@ -104,6 +124,8 @@ export default function HeroesTableData() {
       onHeroUpdated={handleHeroUpdated}
     />
   );
-
-  return { columns, rows, loading, error, editModal };
+  const addModal = (
+    <AddHeroModal open={addModalOpen} onClose={handleAddModalClose} onHeroAdded={handleHeroAdded} />
+  );
+  return { columns, rows, loading, error, editModal, addModal, handleAddClick };
 }

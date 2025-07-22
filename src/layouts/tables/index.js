@@ -36,7 +36,6 @@ import TestimonialsTableData from "layouts/tables/data/testimonialsTableData";
 import FeaturesTableData from "layouts/tables/data/featuresTableData";
 
 import AddIcon from "@mui/icons-material/Add";
-import Axios from "axios";
 import { useState } from "react";
 
 function Tables() {
@@ -294,8 +293,11 @@ function Tables() {
       {usersEditModal}
       {usersAddModal}
       {featuresEditModal}
+      {featuresAddModal}
       {heroEditModal}
+      {heroAddModal}
       {testimonialsEditModal}
+      {testimonialsAddModal}
     </DashboardLayout>
   );
 }
