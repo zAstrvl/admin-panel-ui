@@ -31,9 +31,6 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import UsersTableData from "layouts/tables/data/usersTableData";
-import HeroesTableData from "layouts/tables/data/heroesTableData";
-import TestimonialsTableData from "layouts/tables/data/testimonialsTableData";
-import FeaturesTableData from "layouts/tables/data/featuresTableData";
 
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
@@ -48,36 +45,6 @@ function Tables() {
     addModal: usersAddModal,
     handleAddClick: handleAddUser,
   } = UsersTableData();
-
-  const {
-    columns: hColumns,
-    rows: hRows,
-    loading: heroesLoading,
-    error: heroesError,
-    editModal: heroEditModal,
-    addModal: heroAddModal,
-    handleAddClick: handleAddHero,
-  } = HeroesTableData();
-
-  const {
-    columns: tColumns,
-    rows: tRows,
-    loading: testimonialsLoading,
-    error: testimonialsError,
-    editModal: testimonialsEditModal,
-    addModal: testimonialsAddModal,
-    handleAddClick: handleAddTestimonial,
-  } = TestimonialsTableData();
-
-  const {
-    columns: fColumns,
-    rows: fRows,
-    loading: featuresLoading,
-    error: featuresError,
-    editModal: featuresEditModal,
-    addModal: featuresAddModal,
-    handleAddClick: handleAddFeature,
-  } = FeaturesTableData();
 
   const [loading, setLoading] = useState({
     addingUser: false,
@@ -142,162 +109,11 @@ function Tables() {
               </MDBox>
             </Card>
           </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Heroes Table
-                </MDTypography>
-                <MDButton
-                  variant="contained"
-                  color="white"
-                  size="small"
-                  onClick={handleAddHero}
-                  startIcon={<AddIcon />}
-                >
-                  Add Hero
-                </MDButton>
-              </MDBox>
-              <MDBox pt={3}>
-                {heroesLoading ? (
-                  <MDBox display="flex" justifyContent="center" p={3}>
-                    <CircularProgress />
-                  </MDBox>
-                ) : heroesError ? (
-                  <MDBox p={3}>
-                    <MDTypography variant="body2" color="error">
-                      {heroesError}
-                    </MDTypography>
-                  </MDBox>
-                ) : (
-                  <DataTable
-                    table={{ columns: hColumns, rows: hRows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                )}
-                <MDBox p={3} display="flex" justifyContent="center"></MDBox>
-              </MDBox>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Testimonials Table
-                </MDTypography>
-                <MDButton
-                  variant="contained"
-                  color="white"
-                  size="small"
-                  onClick={handleAddTestimonial}
-                  startIcon={<AddIcon />}
-                >
-                  Add Testimonial
-                </MDButton>
-              </MDBox>
-              <MDBox pt={3}>
-                {testimonialsLoading ? (
-                  <MDBox display="flex" justifyContent="center" p={3}>
-                    <CircularProgress />
-                  </MDBox>
-                ) : testimonialsError ? (
-                  <MDBox p={3}>
-                    <MDTypography variant="body2" color="error">
-                      {testimonialsError}
-                    </MDTypography>
-                  </MDBox>
-                ) : (
-                  <DataTable
-                    table={{ columns: tColumns, rows: tRows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                )}
-              </MDBox>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Features Table
-                </MDTypography>
-                <MDButton
-                  variant="contained"
-                  color="white"
-                  size="small"
-                  onClick={handleAddFeature}
-                  startIcon={<AddIcon />}
-                >
-                  Add Feature
-                </MDButton>
-              </MDBox>
-              <MDBox pt={3}>
-                {featuresLoading ? (
-                  <MDBox display="flex" justifyContent="center" p={3}>
-                    <CircularProgress />
-                  </MDBox>
-                ) : featuresError ? (
-                  <MDBox p={3}>
-                    <MDTypography variant="body2" color="error">
-                      {featuresError}
-                    </MDTypography>
-                  </MDBox>
-                ) : (
-                  <DataTable
-                    table={{ columns: fColumns, rows: fRows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                )}
-              </MDBox>
-            </Card>
-          </Grid>
         </Grid>
       </MDBox>
       <Footer />
       {usersEditModal}
       {usersAddModal}
-      {featuresEditModal}
-      {featuresAddModal}
-      {heroEditModal}
-      {heroAddModal}
-      {testimonialsEditModal}
-      {testimonialsAddModal}
     </DashboardLayout>
   );
 }

@@ -15,75 +15,105 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
-// Material Dashboard 2 React examples
+// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import MasterCard from "examples/Cards/MasterCard";
-import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
+import DataTable from "examples/Tables/DataTable";
 
-// Billing page components
-import PaymentMethod from "layouts/billing/components/PaymentMethod";
-import Invoices from "layouts/billing/components/Invoices";
-import BillingInformation from "layouts/billing/components/BillingInformation";
-import Transactions from "layouts/billing/components/Transactions";
+// Data
+import HeroesTableData from "layouts/tables/data/heroesTableData";
 
-function Billing() {
+import AddIcon from "@mui/icons-material/Add";
+import { useState } from "react";
+
+function Tables() {
+  const {
+    columns: hColumns,
+    rows: hRows,
+    loading: heroesLoading,
+    error: heroesError,
+    editModal: heroEditModal,
+    addModal: heroAddModal,
+    handleAddClick: handleAddHero,
+  } = HeroesTableData();
+
+  const [loading, setLoading] = useState({
+    addingUser: false,
+    addingHero: false,
+    addingTestimonial: false,
+    addingFeature: false,
+  });
+
   return (
     <DashboardLayout>
-      <DashboardNavbar absolute isMini />
-      <MDBox mt={8}>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={8}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} xl={6}>
-                  <MasterCard number={4562112245947852} holder="jack peterson" expires="11/22" />
-                </Grid>
-                <Grid item xs={12} md={6} xl={3}>
-                  <DefaultInfoCard
-                    icon="account_balance"
-                    title="salary"
-                    description="Belong Interactive"
-                    value="+$2000"
+      <DashboardNavbar />
+      <MDBox pt={6} pb={3}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Heroes Table
+                </MDTypography>
+                <MDButton
+                  variant="contained"
+                  color="white"
+                  size="small"
+                  onClick={handleAddHero}
+                  startIcon={<AddIcon />}
+                >
+                  Add Hero
+                </MDButton>
+              </MDBox>
+              <MDBox pt={3}>
+                {heroesLoading ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <CircularProgress />
+                  </MDBox>
+                ) : heroesError ? (
+                  <MDBox p={3}>
+                    <MDTypography variant="body2" color="error">
+                      {heroesError}
+                    </MDTypography>
+                  </MDBox>
+                ) : (
+                  <DataTable
+                    table={{ columns: hColumns, rows: hRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
                   />
-                </Grid>
-                <Grid item xs={12} md={6} xl={3}>
-                  <DefaultInfoCard
-                    icon="paypal"
-                    title="paypal"
-                    description="Freelance Payment"
-                    value="$455.00"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <PaymentMethod />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <Invoices />
-            </Grid>
+                )}
+                <MDBox p={3} display="flex" justifyContent="center"></MDBox>
+              </MDBox>
+            </Card>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={7}>
-              <BillingInformation />
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <Transactions />
-            </Grid>
-          </Grid>
-        </MDBox>
+        </Grid>
       </MDBox>
       <Footer />
+      {heroEditModal}
+      {heroAddModal}
     </DashboardLayout>
   );
 }
 
-export default Billing;
+export default Tables;
