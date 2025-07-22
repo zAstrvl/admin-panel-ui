@@ -55,7 +55,7 @@ export default function HeroesTableData() {
   const fetchHeroes = async () => {
     try {
       setLoading(true);
-      const response = await Axios.get("https://localhost:7294/api/hero");
+      const response = await Axios.get("/hero");
       console.log("Heroes API Response:", response.data);
       setHeroes(response.data || []);
     } catch (err) {

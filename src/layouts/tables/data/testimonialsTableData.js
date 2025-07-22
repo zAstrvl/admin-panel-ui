@@ -53,7 +53,7 @@ export default function TestimonialsTableData() {
   const fetchTestimonials = async () => {
     try {
       setLoading(true);
-      const response = await Axios.get("https://localhost:7294/api/testimonials");
+      const response = await Axios.get("/testimonials");
       console.log("Testimonials API Response:", response.data);
       setTestimonials(response.data || []);
     } catch (err) {

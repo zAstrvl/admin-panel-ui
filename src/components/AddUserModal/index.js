@@ -36,7 +36,6 @@ function AddUserModal({ open, onClose, onUserAdded }) {
     e.preventDefault();
 
     if (!user.name || !user.email || !user.password) {
-      // ✅ userType zorunlu değil
       setError("Name, email and password are required");
       return;
     }
@@ -48,34 +47,42 @@ function AddUserModal({ open, onClose, onUserAdded }) {
       const newUser = {
         name: user.name.trim(),
         email: user.email.trim(),
-        userType: user.userType.trim() || "User", // ✅ Default value
+        userType: user.userType.trim() || "User",
         password: user.password,
       };
 
+      console.log("Creating user with data:", {
+        ...newUser,
+        password: "******",
+      });
+
       console.log("Creating user with data:", newUser);
 
+      // ✅ Proxy kullanıyorsanız sadece endpoint'i belirtin
       const response = await Axios.post("/users", newUser);
       console.log("User created:", response.data);
 
       onUserAdded(response.data);
       handleClose();
     } catch (error) {
-      // ✅ Variable name tutarlı
       console.error("Error creating user:", error);
-      console.error("Error response:", error.response?.data); // ✅ "err" → "error"
+      console.error("Error response:", error.response?.data);
+      console.error("Validation errors:", error.response?.data?.errors); // ✅ Bu satırı ekleyin
+      console.error("Error status:", error.response?.status);
 
-      if (error.response?.status === 400) {
-        const errorMessage =
-          error.response?.data?.message ||
-          error.response?.data?.title ||
-          "Invalid data. Please check all fields.";
-        setError(errorMessage);
-      } else if (error.response?.status === 409) {
-        setError("A user with this email already exists.");
-      } else if (error.response?.status === 401) {
-        setError("Unauthorized. Please login again.");
+      // Validation error'larını göster
+      if (error.response?.data?.errors) {
+        const validationErrors = Object.entries(error.response.data.errors)
+          .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
+          .join("\n");
+
+        setError(`Validation errors:\n${validationErrors}`);
       } else {
-        setError(error.response?.data?.message || "Failed to create user. Please try again.");
+        setError(
+          error.response?.data?.title ||
+            error.response?.data?.message ||
+            "Failed to create user. Please try again."
+        );
       }
     } finally {
       setSaving(false);

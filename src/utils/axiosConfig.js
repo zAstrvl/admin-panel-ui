@@ -1,7 +1,6 @@
 import Axios from "axios";
 
-// ✅ Proxy kullanıyorsanız base URL'i kaldırın
-Axios.defaults.baseURL = "/api"; // Sadece /api
+Axios.defaults.baseURL = "https://localhost:7294/api";
 
 // Request interceptor
 Axios.interceptors.request.use(
@@ -14,7 +13,9 @@ Axios.interceptors.request.use(
 
     config.headers["Content-Type"] = "application/json";
 
-    console.log("Request URL:", config.baseURL + config.url); // Debug için
+    console.log("Request URL:", config.url);
+    console.log("Base URL:", config.baseURL);
+    console.log("Full URL:", config.baseURL + config.url);
 
     return config;
   },

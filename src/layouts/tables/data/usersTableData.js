@@ -88,7 +88,7 @@ export default function data() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await Axios.get("https://localhost:7294/api/users");
+      const response = await Axios.get("/users");
       console.log("Users API Response:", response.data);
       setUsers(response.data || []);
       setError("");

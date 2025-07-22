@@ -140,16 +140,6 @@ function Tables() {
                     noEndBorder
                   />
                 )}
-                <MDBox p={3} display="flex" justifyContent="center">
-                  <MDButton
-                    variant="gradient"
-                    color="success"
-                    onClick={handleAddUser}
-                    startIcon={<AddIcon />}
-                  >
-                    Add New User
-                  </MDButton>
-                </MDBox>
               </MDBox>
             </Card>
           </Grid>
