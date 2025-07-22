@@ -188,16 +188,7 @@ function Tables() {
                     noEndBorder
                   />
                 )}
-                <MDBox p={3} display="flex" justifyContent="center">
-                  <MDButton
-                    variant="gradient"
-                    color="success"
-                    onClick={handleAddHero}
-                    startIcon={<AddIcon />}
-                  >
-                    Add New Hero
-                  </MDButton>
-                </MDBox>
+                <MDBox p={3} display="flex" justifyContent="center"></MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -246,16 +237,6 @@ function Tables() {
                     noEndBorder
                   />
                 )}
-                <MDBox p={3} display="flex" justifyContent="center">
-                  <MDButton
-                    variant="gradient"
-                    color="success"
-                    onClick={handleAddTestimonial}
-                    startIcon={<AddIcon />}
-                  >
-                    Add New Testimonial
-                  </MDButton>
-                </MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -304,16 +285,6 @@ function Tables() {
                     noEndBorder
                   />
                 )}
-                <MDBox p={3} display="flex" justifyContent="center">
-                  <MDButton
-                    variant="gradient"
-                    color="success"
-                    onClick={handleAddFeature}
-                    startIcon={<AddIcon />}
-                  >
-                    Add New Feature
-                  </MDButton>
-                </MDBox>
               </MDBox>
             </Card>
           </Grid>
