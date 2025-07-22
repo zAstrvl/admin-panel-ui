@@ -56,7 +56,7 @@ export default function data() {
   const fetchFeatures = async () => {
     try {
       setLoading(true);
-      const response = await Axios.get("https://localhost:7294/api/features");
+      const response = await Axios.get("/features");
       console.log("Features API Response:", response.data);
       setFeatures(response.data || []);
       setError("");

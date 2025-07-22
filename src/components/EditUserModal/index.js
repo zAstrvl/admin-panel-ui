@@ -45,52 +45,30 @@ function EditUserModal({ open, onClose, userData, onUserUpdated }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!user.name || !user.email) {
-      setError("Name and email are required");
-      return;
-    }
+    // ...existing code...
 
     try {
       setSaving(true);
       setError("");
 
-      // API'nin beklediği tüm fieldları gönder
       const updateData = {
-        id: userData.id, // ID'yi de gönder
+        id: userData.id,
         name: user.name.trim(),
         email: user.email.trim(),
-        userType: user.userType || "User", // Default value
-        passwordHash: userData.passwordHash, // Mevcut password hash'i koru
+        passwordHash: userData.passwordHash,
+        userType: user.userType,
       };
 
       console.log("Updating user ID:", userData.id, "with data:", updateData);
 
-      // PUT isteği gönder
-      const response = await Axios.put(
-        `https://localhost:7294/api/users/${userData.id}`,
-        updateData
-      );
+      // ✅ Proxy kullanıyorsanız full URL yerine endpoint kullanın
+      const response = await Axios.put(`/api/users/${userData.id}`, updateData);
       console.log("User updated successfully:", response.data);
 
-      onUserUpdated(); // Parent component'i güncelle ve modal'ı kapat
+      onUserUpdated();
     } catch (err) {
       console.error("Error updating user:", err);
-      console.error("Error response:", err.response?.data); // API'den gelen detaylı hata mesajı
-
-      if (err.response?.status === 404) {
-        setError("User not found. The user may have been deleted.");
-      } else if (err.response?.status === 400) {
-        // 400 hatası için daha detaylı mesaj
-        const errorMessage =
-          err.response?.data?.message ||
-          err.response?.data?.title ||
-          "Invalid data. Please check all fields.";
-        setError(errorMessage);
-      } else {
-        setError(err.response?.data?.message || "Failed to update user");
-      }
+      setError(err.response?.data?.message || "Failed to update user");
     } finally {
       setSaving(false);
     }
