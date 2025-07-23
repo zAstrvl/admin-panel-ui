@@ -60,6 +60,7 @@ export default function TestimonialsTableData() {
   const handleAddModalClose = () => {
     setAddModalOpen(false);
   };
+
   const fetchTestimonials = async () => {
     try {
       setLoading(true);
@@ -124,7 +125,7 @@ export default function TestimonialsTableData() {
   const addModal = (
     <AddTestimonialModal
       open={addModalOpen}
-      onClose={() => setAddModalOpen(false)}
+      onClose={handleAddModalClose}
       onTestimonialAdded={fetchTestimonials} // Refresh the list after adding a new testimonial
     />
   );

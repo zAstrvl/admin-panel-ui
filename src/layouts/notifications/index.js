@@ -30,9 +30,6 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import UsersTableData from "layouts/tables/data/usersTableData";
-import HeroesTableData from "layouts/tables/data/heroesTableData";
-import TestimonialsTableData from "layouts/tables/data/testimonialsTableData";
 import FeaturesTableData from "layouts/tables/data/featuresTableData";
 
 import AddIcon from "@mui/icons-material/Add";

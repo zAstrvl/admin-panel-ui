@@ -9,7 +9,7 @@ import MDBadge from "components/MDBadge";
 import MDButton from "components/MDButton";
 import EditUserModal from "components/EditUserModal";
 
-export default function data() {
+export default function UsersTableData() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
