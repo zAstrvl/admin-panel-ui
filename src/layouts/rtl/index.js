@@ -43,6 +43,7 @@ function Tables() {
     error: testimonialsError,
     editModal: testimonialsEditModal,
     addModal: testimonialsAddModal,
+    deleteDialog: testimonialsDeleteDialog,
     handleAddClick: handleAddTestimonial,
   } = TestimonialsTableData();
 
@@ -111,6 +112,7 @@ function Tables() {
       <Footer />
       {testimonialsEditModal}
       {testimonialsAddModal}
+      {testimonialsDeleteDialog}
     </DashboardLayout>
   );
 }

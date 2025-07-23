@@ -43,6 +43,7 @@ function Tables() {
     error: featuresError,
     editModal: featuresEditModal,
     addModal: featuresAddModal,
+    deleteDialog: featuresDeleteDialog,
     handleAddClick: handleAddFeature,
   } = FeaturesTableData();
 
@@ -111,6 +112,7 @@ function Tables() {
       <Footer />
       {featuresEditModal}
       {featuresAddModal}
+      {featuresDeleteDialog}
     </DashboardLayout>
   );
 }
