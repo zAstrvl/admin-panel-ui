@@ -43,6 +43,7 @@ function Tables() {
     error: usersError,
     editModal: usersEditModal,
     addModal: usersAddModal,
+    deleteDialog: usersDeleteDialog,
     handleAddClick: handleAddUser,
   } = UsersTableData();
 
@@ -114,6 +115,7 @@ function Tables() {
       <Footer />
       {usersEditModal}
       {usersAddModal}
+      {usersDeleteDialog}
     </DashboardLayout>
   );
 }

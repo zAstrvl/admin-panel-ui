@@ -43,6 +43,7 @@ function Tables() {
     error: heroesError,
     editModal: heroEditModal,
     addModal: heroAddModal,
+    deleteDialog: heroDeleteDialog,
     handleAddClick: handleAddHero,
   } = HeroesTableData();
 
@@ -112,6 +113,7 @@ function Tables() {
       <Footer />
       {heroEditModal}
       {heroAddModal}
+      {heroDeleteDialog}
     </DashboardLayout>
   );
 }

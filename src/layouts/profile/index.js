@@ -43,6 +43,7 @@ function Tables() {
     error: aboutUsError,
     editModal: aboutUsEditModal,
     addModal: aboutUsAddModal,
+    deleteDialog: aboutUsDeleteDialog,
     handleAddClick: handleAddAboutUs,
   } = AboutUsTableData();
 
@@ -111,6 +112,7 @@ function Tables() {
       <Footer />
       {aboutUsEditModal}
       {aboutUsAddModal}
+      {aboutUsDeleteDialog}
     </DashboardLayout>
   );
 }
