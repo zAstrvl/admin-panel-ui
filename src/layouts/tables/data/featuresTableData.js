@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; // "use" kaldırıldı
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import PropTypes from "prop-types";
 
@@ -9,7 +9,7 @@ import MDButton from "components/MDButton";
 import EditFeatureModal from "components/EditFeatureModal";
 import AddFeatureModal from "components/AddFeatureModal";
 
-export default function data() {
+export default function FeaturesTableData() {
   // Function adı düzeltildi
   const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
