@@ -91,10 +91,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Profile",
-    key: "profile",
+    name: "About Us",
+    key: "about-us",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
+    route: "/aboutus",
     component: <Profile />,
   },
   {
