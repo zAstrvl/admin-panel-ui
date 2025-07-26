@@ -40,6 +40,8 @@ import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
 import Axios from "axios";
 
+import { apiUrl } from "utils/constants";
+
 function Cover() {
   const [formData, setFormData] = useState({
     name: "",
@@ -117,7 +119,7 @@ function Cover() {
 
       console.log("Gönderilen veriler:", requestData);
 
-      const response = await Axios.post("https://localhost:7294/api/auth/register", requestData);
+      const response = await Axios.post(`${apiUrl}/api/auth/register`, requestData);
 
       console.log("Registration successful:", response.data);
       alert("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz.");

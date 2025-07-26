@@ -13,164 +13,108 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react";
-
 // @mui material components
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import DataTable from "examples/Tables/DataTable";
 
 // Data
-import reportsBarChartData from "layouts/rtl/data/reportsBarChartData";
-import reportsLineChartData from "layouts/rtl/data/reportsLineChartData";
+import TestimonialsTableData from "layouts/tables/data/testimonialsTableData";
 
-// RTL components
-import Projects from "layouts/rtl/components/Projects";
-import OrdersOverview from "layouts/rtl/components/OrdersOverview";
+import AddIcon from "@mui/icons-material/Add";
+import { useState } from "react";
 
-// Material Dashboard 2 React contexts
-import { useMaterialUIController, setDirection } from "context";
+function Tables() {
+  const {
+    columns: tColumns,
+    rows: tRows,
+    loading: testimonialsLoading,
+    error: testimonialsError,
+    editModal: testimonialsEditModal,
+    addModal: testimonialsAddModal,
+    deleteDialog: testimonialsDeleteDialog,
+    handleAddClick: handleAddTestimonial,
+  } = TestimonialsTableData();
 
-function RTL() {
-  const [, dispatch] = useMaterialUIController();
-  const { sales, tasks } = reportsLineChartData;
-
-  // Changing the direction to rtl
-  useEffect(() => {
-    setDirection(dispatch, "rtl");
-
-    return () => setDirection(dispatch, "ltr");
-  }, []);
+  const [loading, setLoading] = useState({
+    addingUser: false,
+    addingHero: false,
+    addingTestimonial: false,
+    addingFeature: false,
+  });
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="أموال اليوم"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "من الأسبوع الماضي",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="مستخدمو اليوم"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "من الأسبوع الماضي",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="عملاء جدد"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "من الشهر الماضي",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="مبيعات"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "مقارنة بيوم أمس",
-                }}
-              />
-            </MDBox>
+      <MDBox pt={6} pb={3}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Testimonials Table
+                </MDTypography>
+                <MDButton
+                  variant="contained"
+                  color="white"
+                  size="small"
+                  onClick={handleAddTestimonial}
+                  startIcon={<AddIcon />}
+                >
+                  Add Testimonial
+                </MDButton>
+              </MDBox>
+              <MDBox pt={3}>
+                {testimonialsLoading ? (
+                  <MDBox display="flex" justifyContent="center" p={3}>
+                    <CircularProgress />
+                  </MDBox>
+                ) : testimonialsError ? (
+                  <MDBox p={3}>
+                    <MDTypography variant="body2" color="error">
+                      {testimonialsError}
+                    </MDTypography>
+                  </MDBox>
+                ) : (
+                  <DataTable
+                    table={{ columns: tColumns, rows: tRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                )}
+              </MDBox>
+            </Card>
           </Grid>
         </Grid>
-        <MDBox mt={4.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="مشاهدات الموقع"
-                  description="آخر أداء للحملة"
-                  date="الحملة أرسلت قبل يومين"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="المبيعات اليومية"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) زيادة في مبيعات اليوم..
-                    </>
-                  }
-                  date="تم التحديث منذ 4 دقائق"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="المهام المكتملة"
-                  description="آخر أداء للحملة"
-                  date="تم تحديثه للتو"
-                  chart={tasks}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
-            </Grid>
-          </Grid>
-        </MDBox>
       </MDBox>
       <Footer />
+      {testimonialsEditModal}
+      {testimonialsAddModal}
+      {testimonialsDeleteDialog}
     </DashboardLayout>
   );
 }
 
-export default RTL;
+export default Tables;
