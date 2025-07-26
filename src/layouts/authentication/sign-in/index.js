@@ -42,6 +42,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 import Axios from "axios";
+import { apiUrl } from "utils/constants";
 
 function Basic() {
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ function Basic() {
       return;
     }
     try {
-      const response = await Axios.post("https://localhost:7294/api/auth/login", {
+      const response = await Axios.post(`${apiUrl}/api/auth/login`, {
         email: formData.email,
         password: formData.password,
       });

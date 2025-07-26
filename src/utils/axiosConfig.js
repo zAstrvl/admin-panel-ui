@@ -1,6 +1,7 @@
 import Axios from "axios";
+import { apiUrl } from "utils/constants";
 
-Axios.defaults.baseURL = "https://localhost:7294/api";
+Axios.defaults.baseURL = `${apiUrl}/api`;
 
 // Request interceptor
 Axios.interceptors.request.use(

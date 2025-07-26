@@ -15,6 +15,7 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { Edit } from "@mui/icons-material";
+import { apiUrl } from "utils/constants";
 
 function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpdated }) {
   const [testimonial, setTestimonial] = useState({
@@ -64,7 +65,7 @@ function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpd
       };
 
       const response = await Axios.put(
-        `https://localhost:7294/api/testimonials/${testimonialData.id}`,
+        `${apiUrl}/api/testimonials/${testimonialData.id}`,
         updateData
       );
       console.log("Testimonial updated successfully:", response.data);

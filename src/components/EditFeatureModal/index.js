@@ -66,7 +66,7 @@ function EditFeatureModal({ open, onClose, featureData, onFeatureUpdated }) {
       console.log("Updating feature ID:", featureData.id, "with data:", updateData);
 
       const response = await Axios.put(
-        `https://localhost:7294/api/features/${featureData.id}`,
+        `https://schoolapp-cfhmgqdvegb4e4cb.germanywestcentral-01.azurewebsites.net/api/features/${featureData.id}`,
         updateData
       );
       console.log("Feature updated successfully:", response.data);

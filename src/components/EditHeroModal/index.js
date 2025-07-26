@@ -14,6 +14,7 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import { apiUrl } from "utils/constants";
 
 function EditHeroModal({ open, onClose, heroData, onHeroUpdated }) {
   const [hero, setHero] = useState({
@@ -62,10 +63,7 @@ function EditHeroModal({ open, onClose, heroData, onHeroUpdated }) {
         imageUrl: hero.imageUrl,
       };
 
-      const response = await Axios.put(
-        `https://localhost:7294/api/hero/${heroData.id}`,
-        updateData
-      );
+      const response = await Axios.put(`${apiUrl}/api/hero/${heroData.id}`, updateData);
       console.log("Hero updated successfully:", response.data);
 
       onHeroUpdated(response.data);
