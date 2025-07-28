@@ -49,8 +49,8 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
 
       const updateData = {
         id: aboutUs.id,
-        title: aboutUs.title.trim(),
-        description: aboutUs.description.trim(),
+        title: aboutUs.title,
+        description: aboutUs.description,
       };
 
       console.log("Updating about us ID:", aboutUs.id, "with data:", updateData);
@@ -123,34 +123,6 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
               </MDTypography>
             </MDBox>
           )}
-
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Title"
-                  value={aboutUs.title}
-                  onChange={(e) => handleInputChange("title", e.target.value)}
-                  fullWidth
-                  required
-                />
-              </MDBox>
-            </Grid>
-
-            <Grid item xs={12}>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Description"
-                  value={aboutUs.description}
-                  onChange={(e) => handleInputChange("description", e.target.value)}
-                  fullWidth
-                  required
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
         </MDBox>
       </DialogContent>
 

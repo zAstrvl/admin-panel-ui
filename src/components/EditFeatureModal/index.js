@@ -58,9 +58,9 @@ function EditFeatureModal({ open, onClose, featureData, onFeatureUpdated }) {
 
       const updateData = {
         id: featureData.id,
-        title: feature.title.trim(),
-        description: feature.description.trim(),
-        imageUrl: feature.imageUrl.trim(),
+        title: feature.title,
+        description: feature.description,
+        imageUrl: feature.imageUrl,
       };
 
       console.log("Updating feature ID:", featureData.id, "with data:", updateData);

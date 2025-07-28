@@ -19,8 +19,8 @@ import { apiUrl } from "utils/constants";
 
 function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpdated }) {
   const [testimonial, setTestimonial] = useState({
-    name: "",
-    content: "",
+    title: "",
+    description: "",
     imageUrl: "",
   });
   const [saving, setSaving] = useState(false);
@@ -30,8 +30,8 @@ function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpd
     if (open && testimonialData) {
       console.log("Loading testimonial data into form:", testimonialData);
       setTestimonial({
-        name: testimonialData.name || "",
-        content: testimonialData.content || "",
+        title: testimonialData.title || "",
+        description: testimonialData.description || "",
         imageUrl: testimonialData.imageUrl || "",
       });
       setError("");
@@ -48,8 +48,8 @@ function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpd
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!testimonial.name || !testimonial.content) {
-      setError("Name and content are required");
+    if (!testimonial.title || !testimonial.description) {
+      setError("Title and description are required");
       return;
     }
 
@@ -59,8 +59,8 @@ function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpd
 
       const updateData = {
         id: testimonialData.id,
-        name: testimonial.name,
-        content: testimonial.content,
+        title: testimonial.title,
+        description: testimonial.description,
         imageUrl: testimonial.imageUrl,
       };
 
@@ -81,8 +81,8 @@ function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpd
 
   const handleClose = () => {
     setTestimonial({
-      name: "",
-      content: "",
+      title: "",
+      description: "",
       imageUrl: "",
     });
     console.log("Modal closing");
@@ -113,8 +113,8 @@ function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpd
                 <MDInput
                   type="text"
                   label="Name"
-                  value={testimonial.name}
-                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  value={testimonial.title}
+                  onChange={(e) => handleInputChange("title", e.target.value)}
                   fullWidth
                   required
                 />
@@ -126,8 +126,8 @@ function EditTestimonialModal({ open, onClose, testimonialData, onTestimonialUpd
                 <MDInput
                   type="text"
                   label="Content"
-                  value={testimonial.content}
-                  onChange={(e) => handleInputChange("content", e.target.value)}
+                  value={testimonial.description}
+                  onChange={(e) => handleInputChange("description", e.target.value)}
                   fullWidth
                   required
                 />
