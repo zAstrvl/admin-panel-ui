@@ -28,8 +28,8 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
     if (open && aboutUsData) {
       console.log("Loading about us data into form:", aboutUsData);
       setAboutUs({
-        title: aboutUs.title || "",
-        description: aboutUs.description || "",
+        title: aboutUsData.title || "",
+        description: aboutUsData.description || "",
       });
       setError("");
     }
@@ -48,7 +48,7 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
       setError("");
 
       const updateData = {
-        id: aboutUs.id,
+        id: aboutUsData.id,
         title: aboutUs.title,
         description: aboutUs.description,
       };
@@ -56,7 +56,7 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
       console.log("Updating about us ID:", aboutUs.id, "with data:", updateData);
 
       // ✅ Proxy kullanıyorsanız full URL yerine endpoint kullanın
-      const response = await Axios.put(`/api/aboutus/${aboutUs.id}`, updateData);
+      const response = await Axios.put(`/aboutus/${aboutUs.id}`, updateData);
       console.log("About Us updated successfully:", response.data);
 
       onAboutUsUpdated();
@@ -114,15 +114,6 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
               </MDBox>
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox component="form" role="form" mt={2}>
-          {error && (
-            <MDBox mb={2} p={2} borderRadius="lg" sx={{ backgroundColor: "#ffebee" }}>
-              <MDTypography variant="caption" color="error">
-                {error}
-              </MDTypography>
-            </MDBox>
-          )}
         </MDBox>
       </DialogContent>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Axios from "axios";
+import { apiUrl } from "utils/constants";
 
 // @mui material components
 import Dialog from "@mui/material/Dialog";
@@ -65,13 +66,10 @@ function EditFeatureModal({ open, onClose, featureData, onFeatureUpdated }) {
 
       console.log("Updating feature ID:", featureData.id, "with data:", updateData);
 
-      const response = await Axios.put(
-        `https://schoolapp-cfhmgqdvegb4e4cb.germanywestcentral-01.azurewebsites.net/api/features/${featureData.id}`,
-        updateData
-      );
+      const response = await Axios.put(`/features/${featureData.id}`, updateData);
       console.log("Feature updated successfully:", response.data);
 
-      onFeatureUpdated(); // Parent component'i güncelle
+      onFeatureUpdated(response.data); // Parent component'i güncelle
       onClose(); // Modal'ı kapat
     } catch (err) {
       console.error("Error updating feature:", err);
