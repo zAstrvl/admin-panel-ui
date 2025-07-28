@@ -48,6 +48,8 @@ export default function AboutUsTableData() {
 
   const handleEditClick = (aboutUs) => {
     console.log("Edit clicked for about us:", aboutUs);
+    console.log("About Us ID:", aboutUs.id);
+
     setSelectedAboutUs(aboutUs);
     setEditModalOpen(true);
   };
@@ -89,14 +91,13 @@ export default function AboutUsTableData() {
     setItemToDelete(null);
   };
 
-  const handleAboutUsUpdated = () => {
-    console.log("About Us updated, refreshing table");
+  const handleAboutUsUpdated = (updatedAboutUs) => {
+    console.log("About Us updated:", updatedAboutUs);
     setAboutUsData((prev) =>
       prev.map((item) => (item.id === updatedAboutUs.id ? updatedAboutUs : item))
     );
     setEditModalOpen(false);
     setSelectedAboutUs(null);
-    fetchAboutUs();
   };
 
   const handleAddClick = () => {
@@ -104,7 +105,9 @@ export default function AboutUsTableData() {
     setAddModalOpen(true);
   };
 
-  const handleAddModalClose = () => {
+  const handleAddModalClose = (newAboutUs) => {
+    console.log("About Us added:", newAboutUs);
+    setAboutUsData((prev) => [...prev, newAboutUs]);
     setAddModalOpen(false);
   };
 
