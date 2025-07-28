@@ -246,9 +246,8 @@ function Cover() {
                 >
                   <MenuItem value="">Seçiniz</MenuItem>
                   <MenuItem value="Admin">Admin</MenuItem>
-                  <MenuItem value="Teacher">Teacher</MenuItem>
-                  <MenuItem value="Student">Student</MenuItem>
-                  <MenuItem value="Parent">Parent</MenuItem>
+                  <MenuItem value="Editor">Editor</MenuItem>
+                  <MenuItem value="Guest">Guest</MenuItem>
                 </Select>
               </FormControl>
             </MDBox>
