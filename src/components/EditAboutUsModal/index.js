@@ -67,7 +67,7 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
       console.log("Updating about us ID:", aboutUsData.id, "with data:", updateData);
 
       // ✅ Proxy kullanıyorsanız full URL yerine endpoint kullanın
-      const response = await Axios.put(`/aboutus/${aboutUs.id}`, updateData);
+      const response = await Axios.put(`/aboutus/${aboutUsData.id}`, updateData);
       console.log("About Us updated successfully:", response.data);
 
       onAboutUsUpdated(response.data);
