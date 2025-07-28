@@ -43,6 +43,17 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!aboutUs.title || !aboutUs.description) {
+      setError("Title and description are required");
+      return;
+    }
+
+    if (!aboutUsData?.id) {
+      setError("Invalid About Us data. Please refresh and try again.");
+      return;
+    }
+
     try {
       setSaving(true);
       setError("");
@@ -53,13 +64,13 @@ function EditAboutUsModal({ open, onClose, aboutUsData, onAboutUsUpdated }) {
         description: aboutUs.description,
       };
 
-      console.log("Updating about us ID:", aboutUs.id, "with data:", updateData);
+      console.log("Updating about us ID:", aboutUsData.id, "with data:", updateData);
 
       // ✅ Proxy kullanıyorsanız full URL yerine endpoint kullanın
       const response = await Axios.put(`/aboutus/${aboutUs.id}`, updateData);
       console.log("About Us updated successfully:", response.data);
 
-      onAboutUsUpdated();
+      onAboutUsUpdated(response.data);
     } catch (err) {
       console.error("Error updating about us:", err);
       setError(err.response?.data?.message || "Failed to update about us");
